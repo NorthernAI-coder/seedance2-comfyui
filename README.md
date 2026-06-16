@@ -1,12 +1,12 @@
 # Seedance 2.0 & Seedance 2 Mini ComfyUI Nodes
 
 > **ComfyUI custom nodes for Seedance 2.0 and Seedance 2 Mini** — ByteDance's state-of-the-art video generation models.
-> Generate stunning AI videos directly inside ComfyUI using the [muapi.ai](https://muapi.ai) API. Use Seedance 2.0 for maximum quality, or **Seedance 2 Mini** for fast, affordable generation at ~$0.073/sec.
+> Generate stunning AI videos directly inside ComfyUI using the [muapi.ai](https://muapi.ai?utm_source=github&utm_medium=readme&utm_campaign=seedance2-comfyui) API. Use Seedance 2.0 for maximum quality, or **Seedance 2 Mini** for fast, affordable generation at ~$0.073/sec.
 > If you wish to check the API documentation check this [Seedance 2 API](https://github.com/Anil-matcha/Seedance-2-API)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-blue)](https://github.com/comfyanonymous/ComfyUI)
-[![Seedance 2.0](https://img.shields.io/badge/Model-Seedance%202.0-green)](https://muapi.ai)
+[![Seedance 2.0](https://img.shields.io/badge/Model-Seedance%202.0-green)](https://muapi.ai?utm_source=github&utm_medium=readme&utm_campaign=seedance2-comfyui)
 
 ---
 
@@ -65,7 +65,7 @@ pip install -r seedance2-comfyui/requirements.txt
 
 ## Quick Start
 
-1. Sign up at [muapi.ai](https://muapi.ai) and go to **Dashboard → API Keys → Create Key**
+1. Sign up at [muapi.ai](https://muapi.ai?utm_source=github&utm_medium=readme&utm_campaign=seedance2-comfyui) and go to **Dashboard → API Keys → Create Key**
 2. Right-click the ComfyUI canvas → **Add Node** → **🌱 Seedance 2.0**
 3. Add a **🔑 Seedance 2.0 API Key** node, paste your key, and wire its output to any generation node
 4. Write a prompt and hit **Queue Prompt**
