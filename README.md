@@ -1,274 +1,473 @@
-# Seedance 2.0 & Seedance 2 Mini ComfyUI Nodes
+# 🎬 Awesome Seedance 2.5 — API, Prompts & Complete Guide
 
-> **ComfyUI custom nodes for Seedance 2.0 and Seedance 2 Mini** — ByteDance's state-of-the-art video generation models.
-> Generate stunning AI videos directly inside ComfyUI using the [muapi.ai](https://muapi.ai?utm_source=github&utm_medium=readme&utm_campaign=seedance2-comfyui) API. Use Seedance 2.0 for maximum quality, or **Seedance 2 Mini** for fast, affordable generation at ~$0.073/sec.
-> If you wish to check the API documentation check this [Seedance 2 API](https://github.com/Anil-matcha/Seedance-2-API)
+> The ultimate resource for Seedance 2.5 — ByteDance's next-gen AI video generation model. Covers API integration, prompt engineering, camera controls, multimodal workflows, and curated examples.
 
+[![Seedance 2.5](https://img.shields.io/badge/Seedance-2.5-blue)](https://seed.bytedance.com)
+[![Powered by MuAPI](https://img.shields.io/badge/Powered%20by-MuAPI-6366f1?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0tMSAxNHYtNGgtMnYtMmg0djZoLTJ6bTAtOFY2aDJ2MmgtMnoiLz48L3N2Zz4=)](https://muapi.ai?utm_source=github&utm_medium=badge&utm_campaign=awesome-seedance-2.5)
+[![Stars](https://img.shields.io/github/stars/Anil-matcha/awesome-seedance-2.5-api-prompts?style=social)](https://github.com/Anil-matcha/awesome-seedance-2.5-api-prompts)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-blue)](https://github.com/comfyanonymous/ComfyUI)
-[![Seedance 2.0](https://img.shields.io/badge/Model-Seedance%202.0-green)](https://muapi.ai?utm_source=github&utm_medium=readme&utm_campaign=seedance2-comfyui)
 
 ---
 
-## Related Projects
+## Table of Contents
 
-- [seedance-2-generator](https://github.com/SamurAIGPT/seedance-2-generator) — Ready-made Next.js SaaS built on Seedance 2 — no ComfyUI needed
-- [seedance-2.0-watermark-remover](https://github.com/SamurAIGPT/seedance-2.0-watermark-remover) — Remove watermarks from your Seedance 2 outputs
-- [n8n-nodes-seedance2](https://github.com/Anil-matcha/n8n-nodes-seedance2) — Automate Seedance 2 generation in n8n workflows
-- [muapi-comfyui](https://github.com/SamurAIGPT/muapi-comfyui) — ComfyUI nodes for 100+ MuAPI models including Seedance
-
-## What is Seedance 2.0?
-
-Seedance 2.0 is ByteDance's latest video generation model, capable of producing high-quality, photorealistic videos from text prompts or reference images. It supports:
-
-- **Text-to-Video** — generate video from a text description
-- **Image-to-Video** — animate up to 9 reference images with motion guidance
-- **Omni Reference** — combine images, video clips, and audio as multi-modal reference inputs
-- **Video Extend** — seamlessly extend any generated video
-- **Consistent Character** — generate a 4K multi-panel character sheet from reference photos; use `@character:<id>` inline in any prompt, or wire the sheet image directly into **Consistent Character Video** for tighter face fidelity
-- **Seedance 2 Mini** — ByteDance's lightweight model for fast, affordable generation at ~$0.073/sec; ideal for rapid iteration and high-volume workflows
-
----
-
-## Nodes
-
-| Node | Description |
-|------|-------------|
-| 🔑 Seedance 2.0 API Key | Set your key once — wire to all nodes |
-| 🌱 Seedance 2.0 Text-to-Video | Generate video from a text prompt |
-| 🌱 Seedance 2.0 Image-to-Video | Animate up to 9 reference images |
-| 🌱 Seedance 2.0 Omni Reference | Multi-modal: combine images, video clips, and audio |
-| 🌱 Seedance 2.0 Consistent Character | Generate a 4K character sheet from 1–3 reference photos |
-| 🌱 Seedance 2.0 Consistent Character Video | Animate a scene with locked character identity from a sheet |
-| 🌱 Seedance 2.0 Extend | Extend a previously generated video |
-| 🌱 Seedance 2.0 Save Video | Download URL → disk + ComfyUI IMAGE frames |
-| ⚡ Seedance 2 Mini Text-to-Video | Fast, affordable T2V at ~$0.073/sec — great for rapid iteration |
-| ⚡ Seedance 2 Mini Image-to-Video | Fast, affordable I2V — ideal for bulk ComfyUI workflows |
+- [What is Seedance 2.5?](#what-is-seedance-25)
+- [Seedance 2.5 vs 2.0 — What's New](#seedance-25-vs-20--whats-new)
+- [Capabilities](#capabilities)
+- [API Reference (MuAPI)](#api-reference-muapi)
+  - [Text-to-Video](#1-seedance-25-text-to-video-t2v)
+  - [Image-to-Video](#2-seedance-25-image-to-video-i2v)
+  - [Video Extension](#3-seedance-25-video-extension)
+  - [Polling for Results](#polling-for-results)
+  - [Parameters](#muapi-parameters)
+- [Prompt Engineering Guide](#prompt-engineering-guide)
+- [Prompt Engineering Guide](#prompt-engineering-guide)
+  - [The 6-Step Formula](#the-6-step-formula)
+  - [Camera Movement Vocabulary](#camera-movement-vocabulary)
+  - [Lighting Keywords](#lighting-keywords)
+  - [Multimodal Reference Syntax](#multimodal-reference-syntax)
+- [Prompt Templates by Category](#prompt-templates-by-category)
+  - [Cinematic / Film](#cinematic--film)
+  - [Social Media / UGC](#social-media--ugc)
+  - [Anime & Stylized](#anime--stylized)
+  - [Advertising / Product](#advertising--product)
+  - [Multi-Shot Sequences](#multi-shot-sequences)
+- [Advanced Workflows](#advanced-workflows)
+- [Tips & Best Practices](#tips--best-practices)
+- [API Providers Comparison](#api-providers-comparison)
+- [Resources & Links](#resources--links)
 
 ---
 
-## Installation
+## What is Seedance 2.5?
 
-### Via ComfyUI Manager (recommended)
-1. Open **ComfyUI Manager** → **Install via Git URL**
-2. Paste: `https://github.com/Anil-matcha/seedance2-comfyui`
-3. Restart ComfyUI
+**Seedance 2.5** is ByteDance's latest AI video generation model, built on the Seed video foundation. It is a significant upgrade over Seedance 2.0, with a focus on:
 
-### Manual
+- **Multi-shot storytelling** — generate longer, cinematically coherent narratives from a single prompt
+- **Character & brand consistency** — maintain the same face, clothing, and style across all shots
+- **Director-grade camera control** — precise rack focus, crane shots, whip pans, and more
+- **Native audio synchronization** — tighter lip-sync and sound design baked in at generation time
+- **Better physics & motion stability** — realistic fluid dynamics, cloth simulation, and crowd motion
+
+Seedance 2.5 accepts **text, images, video clips, and audio** as input and outputs **MP4 video with synchronized audio**.
+
+---
+
+## Seedance 2.5 vs 2.0 — What's New
+
+| Feature | Seedance 2.0 | Seedance 2.5 |
+|---|---|---|
+| Multi-shot coherence | Basic | Director-grade, single-pass |
+| Character consistency | Good | Excellent (cross-shot) |
+| Camera controls | Standard | Advanced (rack focus, crane, whip pan) |
+| Audio sync / lip-sync | Present | Enhanced, tighter |
+| Physics / motion | Standard | Improved cloth & fluid sim |
+| Style fusion | Basic | Brand-safe style fusion |
+| Max resolution | 1080p | 1080p+ |
+| Max duration | 15s | Longer sequences |
+
+---
+
+## Capabilities
+
+- **Text-to-Video** — generate video from a text prompt alone
+- **Image-to-Video** — animate a still image with motion
+- **Video-to-Video** — restyle or extend an existing video clip
+- **Audio-to-Video** — sync visuals to a provided audio track
+- **Multi-modal** — combine text + image + audio in one generation
+- **AI Dance / Motion Transfer** — make people, pets, or characters perform dance movements
+
+### Supported Input Formats
+- Images: JPEG, PNG, WebP (up to 9 images)
+- Video: MP4, MOV (up to 3 clips, 15s total)
+- Audio: WAV, MP3 (up to 3 files)
+
+### Output Specs
+- Resolutions: 480p, 720p, 1080p
+- Durations: 4–15 seconds per clip
+- Aspect Ratios: `21:9` `16:9` `4:3` `1:1` `3:4` `9:16`
+- Format: MP4 with synchronized audio
+
+---
+
+## API Reference (MuAPI)
+
+The fastest way to access Seedance 2.5 via API is through **[MuAPI](https://muapi.ai?utm_source=github&utm_medium=readme&utm_campaign=awesome-seedance-2.5)** — a unified media API gateway with reliable uptime, competitive pricing, and no per-provider account setup.
+
+**Get your API key:** [muapi.ai](https://muapi.ai?utm_source=github&utm_medium=readme&utm_campaign=awesome-seedance-2.5)
+
 ```bash
-cd ComfyUI/custom_nodes
-git clone https://github.com/Anil-matcha/seedance2-comfyui
-pip install -r seedance2-comfyui/requirements.txt
+x-api-key: YOUR_MUAPI_KEY
+Base URL: https://api.muapi.ai/api/v1
 ```
 
 ---
 
-## Quick Start
+### 1. Seedance 2.5 Text-to-Video (T2V)
 
-1. Sign up at [muapi.ai](https://muapi.ai?utm_source=github&utm_medium=readme&utm_campaign=seedance2-comfyui) and go to **Dashboard → API Keys → Create Key**
-2. Right-click the ComfyUI canvas → **Add Node** → **🌱 Seedance 2.0**
-3. Add a **🔑 Seedance 2.0 API Key** node, paste your key, and wire its output to any generation node
-4. Write a prompt and hit **Queue Prompt**
+**Endpoint:** `POST https://api.muapi.ai/api/v1/seedance-2.5-t2v`
 
-> **Tip:** If you use the [MuAPI CLI](https://github.com/SamurAIGPT/muapi-cli), run `muapi auth configure --api-key YOUR_KEY` once and all nodes will pick it up automatically — no need to paste the key anywhere.
-
----
-
-## Node Reference
-
-### 🔑 Seedance 2.0 API Key
-
-Set your muapi.ai API key once and wire the output to all generation nodes. Alternatively, leave every `api_key` field blank — nodes automatically read from `~/.muapi/config.json` if you've authenticated via the CLI.
-
----
-
-### 🌱 Seedance 2.0 Text-to-Video
-
-Generate a video from a text description.
-
-| Field | Values | Default |
-|-------|--------|---------|
-| `api_key` | Optional — leave blank if using the API Key node or CLI config | — |
-| `prompt` | Text describing the video | — |
-| `aspect_ratio` | 16:9 / 9:16 / 4:3 / 3:4 | 16:9 |
-| `quality` | basic / high | basic |
-| `duration` | 5 / 10 / 15 seconds | 5 |
-
-**Outputs:** `video_url` · `first_frame` (IMAGE) · `request_id`
-
----
-
-### 🌱 Seedance 2.0 Image-to-Video
-
-Animate reference images into a video. Connect up to 9 images via `image_1` … `image_9` and reference them in the prompt using `@image1` … `@image9`.
-
-**Example prompt:**
+```bash
+curl --location --request POST "https://api.muapi.ai/api/v1/seedance-2.5-t2v" \
+  --header "Content-Type: application/json" \
+  --header "x-api-key: YOUR_API_KEY" \
+  --data-raw '{
+      "prompt": "A lone astronaut walks across a red Martian desert at golden hour, wide angle, cinematic",
+      "aspect_ratio": "16:9",
+      "duration": 10,
+      "quality": "high"
+  }'
 ```
-The cat in @image1 walks gracefully through a sunlit garden.
-@image1 transforms into @image2 with a smooth dissolve transition.
+
+**Python:**
+```python
+import requests
+
+response = requests.post(
+    "https://api.muapi.ai/api/v1/seedance-2.5-t2v",
+    headers={"x-api-key": "YOUR_API_KEY", "Content-Type": "application/json"},
+    json={
+        "prompt": "A lone astronaut walks across a red Martian desert at golden hour, wide angle, cinematic",
+        "aspect_ratio": "16:9",
+        "duration": 10,
+        "quality": "high"
+    }
+)
+request_id = response.json()["request_id"]
 ```
 
 ---
 
-### 🌱 Seedance 2.0 Omni Reference
+### 2. Seedance 2.5 Image-to-Video (I2V)
 
-Multi-modal video generation that combines images, video clips, and audio clips as reference material alongside a text prompt. Use `@image1`…`@image9`, `@video1`…`@video3`, and `@audio1`…`@audio3` to reference media in the prompt.
+**Endpoint:** `POST https://api.muapi.ai/api/v1/seedance-2.5-i2v`
 
-**Example prompt:**
-```
-A person @image1 walking on the beach at sunset, cinematic lighting, with @audio1 as background music.
-```
+Reference input images in your prompt using `@image1`, `@image2`, etc.
 
-| Field | Values | Default |
-|-------|--------|---------|
-| `prompt` | Text with optional `@imageN`, `@videoN`, `@audioN` references | — |
-| `aspect_ratio` | 21:9 / 16:9 / 4:3 / 1:1 / 3:4 / 9:16 | 16:9 |
-| `duration` | 4 – 15 seconds (integer) | 5 |
-| `image_1` … `image_9` | Optional — ComfyUI IMAGE tensors (auto-uploaded) | — |
-| `video_url_1` … `video_url_3` | Optional — MP4 URL (max 15s each) | — |
-| `audio_url_1` … `audio_url_3` | Optional — MP3/WAV URL (total max 15s) | — |
-
-**Outputs:** `video_url` · `first_frame` (IMAGE) · `request_id`
-
----
-
-### 🌱 Seedance 2.0 Consistent Character
-
-Generate a 4K / 21:9 multi-panel character sheet (front, back, side profile, action pose, facial expressions, accessories) from 1–3 reference photos of a real person.
-
-| Field | Description |
-|-------|-------------|
-| `image_1` … `image_3` | Reference photos of the person (at least 1 required; clear frontal/3-4 angle shots work best) |
-| `outfit_description` | Describe the desired outfit/style for the character |
-
-**Outputs:**
-
-| Output | Type | Description |
-|--------|------|-------------|
-| `sheet_image` | IMAGE | Character sheet as a ComfyUI tensor — wire directly into Consistent Character Video |
-| `sheet_url` | STRING | CDN URL of the character sheet image |
-| `character_id` | STRING | `request_id` of this generation — use as `@character:<id>` in T2V/I2V/Omni prompts |
-
-**Recommended workflow — wire `sheet_image` into Consistent Character Video:**
-```
-[LoadImage] ──→ [🌱 Consistent Character] ──(sheet_image)──→ [🌱 Consistent Character Video]
-                    [outfit_description]       (sheet_url)          [scene prompt]
+```bash
+curl --location --request POST "https://api.muapi.ai/api/v1/seedance-2.5-i2v" \
+  --header "Content-Type: application/json" \
+  --header "x-api-key: YOUR_API_KEY" \
+  --data-raw '{
+      "prompt": "@image1 — the camera slowly pushes in as she turns to face us, hair blowing in the wind",
+      "images_list": ["https://example.com/photo.jpg"],
+      "aspect_ratio": "16:9",
+      "duration": 8,
+      "quality": "high"
+  }'
 ```
 
-**Alternative — use `@character:<id>` in any prompt (simpler but looser face fidelity):**
-```
-[🌱 Consistent Character] character_id ──→ (paste into prompt) ──→ [🌱 Text-to-Video]
-
-T2V prompt: "@character:{character_id} rides a motorcycle through a neon-lit city at night"
+**Python:**
+```python
+response = requests.post(
+    "https://api.muapi.ai/api/v1/seedance-2.5-i2v",
+    headers={"x-api-key": "YOUR_API_KEY", "Content-Type": "application/json"},
+    json={
+        "prompt": "@image1 — the camera slowly pushes in as she turns to face us, hair blowing in the wind",
+        "images_list": ["https://example.com/photo.jpg"],
+        "aspect_ratio": "16:9",
+        "duration": 8,
+        "quality": "high"
+    }
+)
+request_id = response.json()["request_id"]
 ```
 
 ---
 
-### 🌱 Seedance 2.0 Consistent Character Video
+### 3. Seedance 2.5 Video Extension
 
-Generate a video scene with locked character identity. Anchors on the character sheet image as `@image1` for maximum face/identity preservation.
+**Endpoint:** `POST https://api.muapi.ai/api/v1/seedance-2.5-extend`
 
-Connect `sheet_image` (or paste `sheet_url`) from the **Consistent Character** node.
+Seamlessly extend an existing Seedance 2.5 clip while maintaining style and character consistency.
 
-| Field | Description |
-|-------|-------------|
-| `prompt` | Scene description. `@image1` refers to the character sheet and is auto-prepended if omitted. |
-| `sheet_image` | IMAGE tensor from Consistent Character (preferred) |
-| `sheet_url` | Paste the sheet URL if you don't have the tensor |
-| `scene_image_2`, `scene_image_3` | Optional extra scene/background images (referenced as `@image2`, `@image3`) |
-| `aspect_ratio` | 16:9 / 9:16 / 4:3 / 3:4 |
-| `quality` | basic / high |
-| `duration` | 5 / 10 / 15 seconds |
-
-**Outputs:** `video_url` · `first_frame` (IMAGE) · `request_id`
-
-**Example prompt:**
-```
-@image1 walks through a rain-soaked neon city, cinematic slow motion
+```bash
+curl --location --request POST "https://api.muapi.ai/api/v1/seedance-2.5-extend" \
+  --header "Content-Type: application/json" \
+  --header "x-api-key: YOUR_API_KEY" \
+  --data-raw '{
+      "request_id": "YOUR_ORIGINAL_REQUEST_ID",
+      "prompt": "She continues walking into the foggy distance",
+      "duration": 6
+  }'
 ```
 
 ---
 
-### 🌱 Seedance 2.0 Extend
+### Polling for Results
 
-Continue any completed Seedance 2.0 video. Connect the `request_id` output from a generation node.
+All MuAPI endpoints return a `request_id`. Poll until `status` is `completed`:
 
-| Field | Description |
-|-------|-------------|
-| `request_id` | From a completed T2V or I2V generation |
-| `prompt` | Optional — guide the continuation |
-| `quality` | basic / high |
-| `duration` | 5 / 10 / 15 seconds to add |
+```python
+import time, requests
 
----
+def wait_for_result(request_id, api_key, poll_interval=5, timeout=300):
+    start = time.time()
+    while time.time() - start < timeout:
+        res = requests.get(
+            f"https://api.muapi.ai/api/v1/status/{request_id}",
+            headers={"x-api-key": api_key}
+        ).json()
+        if res["status"] == "completed":
+            return res["outputs"][0]
+        elif res["status"] == "failed":
+            raise Exception(res.get("error", "Generation failed"))
+        time.sleep(poll_interval)
+    raise TimeoutError("Generation timed out")
 
-### 🌱 Seedance 2.0 Save Video
-
-Downloads the generated video to ComfyUI's output folder and returns all frames as an IMAGE tensor for use with other nodes (preview, VHS, upscale, etc.).
-
----
-
-## Example Workflows
-
-Load any `.json` file from this repo via **File → Load** in ComfyUI.
-
-| File | Description |
-|------|-------------|
-| `Seedance2_T2V_Example.json` | Basic text-to-video generation |
-| `Seedance2_ConsistentCharacter_Example.json` | Full consistent character workflow: reference photo → character sheet → video |
-
-**Text-to-Video:**
-```
-[🔑 API Key] ──────────────────────────────────┐
-                                                ↓
-[🌱 Text-to-Video] → video_url → [🌱 Save Video] → frames → [Preview Image]
-```
-
-**Consistent Character:**
-```
-[🔑 API Key] ─────────────────────────────────────────────────────────────┐
-                                                                           ↓
-[LoadImage] → [🌱 Consistent Character] → sheet_image → [🌱 Consistent Character Video] → [🌱 Save Video]
-               [outfit_description]          ↓               [scene prompt]
-                                    [Preview Image]                ↓
-                                    (character sheet)      [Preview Image]
-                                                           (first frame)
+video_url = wait_for_result(request_id, "YOUR_API_KEY")
+print(f"Video: {video_url}")
 ```
 
 ---
 
-## API
+### MuAPI Parameters
 
-This node pack uses the **muapi.ai** API under the hood:
-- **T2V:** `POST https://api.muapi.ai/api/v1/seedance-v2.0-t2v`
-- **I2V:** `POST https://api.muapi.ai/api/v1/seedance-v2.0-i2v`
-- **Omni:** `POST https://api.muapi.ai/api/v1/seedance-2.0-omni-reference`
-- **Character:** `POST https://api.muapi.ai/api/v1/seedance-2-character`
-- **Extend:** `POST https://api.muapi.ai/api/v1/seedance-v2.0-extend`
-- **Seedance 2 Mini T2V:** `POST https://api.muapi.ai/api/v1/seedance-2-mini-t2v`
-- **Seedance 2 Mini I2V:** `POST https://api.muapi.ai/api/v1/seedance-2-mini-i2v`
-- **Poll:** `GET https://api.muapi.ai/api/v1/predictions/{id}/result`
-- **Upload:** `POST https://api.muapi.ai/api/v1/upload_file`
+| Parameter | Type | Options | Default | Description |
+|---|---|---|---|---|
+| `prompt` | string | — | required | Text description. Use `@image1`, `@image2` to reference inputs |
+| `images_list` | array | URLs | — | Input images for I2V (up to 9) |
+| `aspect_ratio` | string | `21:9` `16:9` `4:3` `1:1` `3:4` `9:16` | `16:9` | Output aspect ratio |
+| `duration` | int | `4`–`15` | `10` | Duration in seconds |
+| `quality` | string | `basic` `high` | `basic` | `high` = 1080p priority |
+| `remove_watermark` | bool | `true` `false` | `false` | Remove MuAPI watermark |
 
-Authentication is a single `x-api-key` header — no session tokens required.
+> **Playground:** [muapi.ai/playground](https://muapi.ai?utm_source=github&utm_medium=readme&utm_campaign=awesome-seedance-2.5)
 
 ---
 
-## Requirements
+## Prompt Engineering Guide
 
-- Python ≥ 3.8
-- `requests` ≥ 2.28 · `Pillow` ≥ 9.0 · `numpy` ≥ 1.23 · `torch` ≥ 2.0 · `opencv-python` ≥ 4.7
+### The 6-Step Formula
+
+Structure your prompts using this formula for best results. **The first 20–30 words carry the most weight** — Seedance locks in the subject and core action from the opening.
+
+```
+[SUBJECT] + [ACTION] + [ENVIRONMENT] + [CAMERA] + [STYLE] + [CONSTRAINTS]
+```
+
+**Target length: 60–100 words.**
+
+**Example:**
+```
+A young chef (subject) carefully plates a dish with tweezers (action) 
+in a Michelin-star restaurant kitchen at midnight (environment), 
+close-up rack focus from hands to face (camera), 
+warm tungsten lighting, cinematic 35mm film grain (style), 
+no jump cuts, maintain consistent kitchen background (constraints).
+```
 
 ---
 
-## Want More Models?
+### Camera Movement Vocabulary
 
-This repo is focused on Seedance 2.0 only. If you need access to **100+ models** — Kling, Veo3, Flux, HiDream, GPT-image-1.5, Imagen4, Wan, lipsync, audio, image enhancement and more — check out the full MuAPI ComfyUI node pack:
+Use these exact terms in your prompts for precise camera control:
 
-**[SamurAIGPT/muapi-comfyui](https://github.com/SamurAIGPT/muapi-comfyui)** — ComfyUI nodes for every muapi.ai model in one place.
+| Movement | Prompt Keyword |
+|---|---|
+| Move toward subject | `slow push in` / `dolly in` |
+| Move away from subject | `pull back` / `dolly out` |
+| Horizontal slide | `tracking shot left/right` |
+| Vertical rise | `crane up` / `boom up` |
+| Follow subject | `steadicam follow shot` |
+| Rotate around subject | `orbit shot` / `360 arc` |
+| Quick pan | `whip pan left/right` |
+| Lock still | `static shot` / `locked off camera` |
+| Overhead | `bird's eye view` / `top-down` |
+| Low angle | `worm's eye view` / `low angle` |
+| Shaky, urgent | `handheld camera` |
+| Smooth glide | `gimbal shot` |
+| Background blur | `rack focus to subject` |
+
+---
+
+### Lighting Keywords
+
+> **Lighting descriptions have the biggest single impact on video quality.** One strong lighting keyword beats ten adjectives.
+
+| Look | Keyword |
+|---|---|
+| Film-quality warmth | `golden hour cinematography` |
+| Night scene | `tungsten practical lighting` |
+| Drama / mystery | `chiaroscuro lighting` |
+| Studio clean | `soft box three-point lighting` |
+| Neon / cyberpunk | `neon-drenched night scene` |
+| Documentary | `natural available light` |
+| Horror | `harsh under-lighting` |
+| Beauty / fashion | `butterfly lighting` |
+| Outdoor overcast | `diffused cloudy daylight` |
+
+---
+
+### Multimodal Reference Syntax
+
+When passing images, videos, or audio alongside your prompt, reference them with `@Tags`:
+
+```
+@Image1 — reference a still image input
+@Image2 — second image input
+@Video1 — reference a video clip input
+@Audio1 — reference an audio file input
+```
+
+**Example multimodal prompt:**
+```
+@Image1 is the main character. @Audio1 is the background score. 
+She walks through a neon-lit Tokyo alley at night, camera tracking 
+alongside her, cinematic depth of field, rain-soaked streets reflecting 
+the neon signs, sync the footsteps to @Audio1.
+```
+
+---
+
+### Shot Script Format (Advanced)
+
+For multi-shot videos, use timecodes to control pacing:
+
+```
+[0:00–0:03] WIDE SHOT — Aerial view of a volcanic island at sunrise, slow push in.
+[0:03–0:08] MEDIUM SHOT — A researcher emerges from a tent, looks toward the volcano, rack focus to her face.
+[0:08–0:15] CLOSE-UP — Her eyes reflecting the distant glow, golden hour light, handheld slight tremor.
+Style: BBC Planet Earth, 4K cinematic, natural sound design.
+```
+
+---
+
+## Prompt Templates by Category
+
+### Cinematic / Film
+
+```
+A weathered detective (50s, trench coat) lights a cigarette on a rain-soaked 
+New York street at 3am, neon signs reflecting in puddles, slow dolly back 
+to reveal the city behind him, film noir style, 35mm grain, chiaroscuro 
+lighting, no dialogue.
+```
+
+```
+Timelapse of storm clouds rolling over the Scottish Highlands, heather 
+fields swaying in the wind below, golden sunset breaking through on the 
+horizon, aerial pull-back reveal, Terrence Malick style cinematography.
+```
+
+---
+
+### Social Media / UGC
+
+```
+A girl unboxes a luxury skincare set on a marble countertop, close-up of 
+her hands removing tissue paper, product reveal in warm soft-box lighting, 
+9:16 vertical, lifestyle aesthetic, satisfying ASMR sound design.
+```
+
+```
+POV shot walking through a busy Tokyo street market at dusk, neon signs, 
+food stalls, crowds, handheld camera, cinéma vérité style, authentic 
+ambient street sounds, 9:16 vertical.
+```
+
+---
+
+### Anime & Stylized
+
+```
+A lone samurai stands on a cherry blossom cliff at twilight, petals falling 
+in slow motion around him, wide establishing shot, Studio Ghibli art style, 
+painterly brush strokes, soft orchestral music, no dialogue.
+```
+
+```
+Cyberpunk anime girl with neon pink hair walks through a holographic market 
+on a rain-soaked megacity street, tracking shot, Makoto Shinkai lighting, 
+bokeh depth of field, synthwave ambient audio.
+```
+
+---
+
+### Advertising / Product
+
+```
+A sleek black electric car races along a coastal highway at golden hour, 
+low tracking shot alongside the vehicle, salt spray and motion blur, 
+cut to close-up of the steering wheel and dashboard, premium automotive 
+ad aesthetic, orchestral score.
+```
+
+```
+A barista pours a perfect latte art rose in a minimalist café, extreme 
+close-up rack focus, warm tungsten practical lighting, steam rising, 
+slow motion pour, ASMR coffee sounds.
+```
+
+---
+
+### Multi-Shot Sequences
+
+```
+[0:00–0:04] AERIAL WIDE — Drone shot descending toward a mountain summit at dawn.
+[0:04–0:09] MEDIUM — A hiker reaches the peak, arms raised, facing away from camera.
+[0:09–0:15] CLOSE-UP — Her face turns to us, wind in her hair, tears in her eyes, sunrise light.
+Style: Inspirational brand film, Hans Zimmer-style score, no dialogue.
+```
+
+---
+
+## Advanced Workflows
+
+### Character Consistency Across Shots
+
+1. Start with a clear reference image of your character (`@Image1`)
+2. Describe physical attributes explicitly in every shot: *"same woman, mid-30s, red dress, dark curly hair"*
+3. Lock the lighting style in your opening prompt and repeat it per shot
+4. Use `maintain character appearance throughout` as a trailing constraint
+
+### Brand-Safe Style Fusion
+
+```
+[Brand palette: navy blue, warm gold, clean white]
+A product (@Image1) sits on a marble surface, soft natural window light, 
+navy and gold color grade, luxury minimal aesthetic, slow push in, 
+brand colors maintained throughout, no text overlays.
+```
+
+### AI Dance / Motion Transfer
+
+```
+@Image1 is a person standing in a neutral pose. Apply full-body dance 
+choreography — contemporary hip-hop style, maintain their exact face and 
+clothing, smooth 24fps motion, rhythmic bass-driven audio sync, 9:16 vertical.
+```
+
+---
+
+## Tips & Best Practices
+
+- **Front-load the subject and action** — the first 20–30 words determine the output more than anything else
+- **One lighting keyword > ten adjectives** — `golden hour cinematography` beats `warm, beautiful, glowing, soft, rich, vibrant...`
+- **Be explicit about what NOT to do** — `no jump cuts`, `no text overlays`, `no camera shake` prevent common artifacts
+- **Use film/director references as style anchors** — `Wes Anderson symmetry`, `Roger Deakins lighting`, `Wong Kar-wai color grade`
+- **For 9:16 vertical**, explicitly state it and design composition for mobile framing (subjects centered, headroom at top)
+- **Iterate on lighting first** — if a generation looks flat, add or change the lighting keyword before anything else
+- **Use seeds for reproducibility** — save the seed of a generation you like to iterate from the same base
+
+---
+
+## Resources & Links
+
+- [Seedance Official (ByteDance)](https://seed.bytedance.com/en/seedance2_0)
+- [MuAPI — Seedance 2.5 API Access](https://muapi.ai?utm_source=github&utm_medium=readme&utm_campaign=awesome-seedance-2.5)
+- [Seedance 2.5 Release Notes](https://www.openpr.com/news/4555789/seedance-2-5-released-next-level-multi-shot-ai-video)
+- [Seedance Prompt Guide by invideo.io](https://invideo.io/blog/seedance-2-0-prompt-guide/)
+- [BytePlus ModelArk Docs](https://docs.byteplus.com/en/docs/ModelArk)
+
+---
+
+## Contributing
+
+PRs welcome! Add prompts, correct parameters, share API code examples, or link to new Seedance 2.5 resources. Open an issue to suggest a new category.
 
 ---
 
 ## License
 
-MIT © 2026
+MIT
