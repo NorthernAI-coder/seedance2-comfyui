@@ -69,10 +69,13 @@
 - **Director-grade camera control** — precise rack focus, crane shots, whip pans, and more
 - **Native audio synchronization** — tighter lip-sync and sound design baked in at generation time
 - **Better physics & motion stability** — realistic fluid dynamics, cloth simulation, and crowd motion
-- **Rich multimodal references** — guide generations with character images, product materials, style boards, motion clips, audio direction, brand assets, and 3D references
+- **Rich multimodal references** — guide generations with up to 30 images, 10 reference video clips, and 10 reference audio clips per request
 - **Controllable video editing** — adjust backgrounds, replace products, change models, or refine local details while preserving the larger shot
+- **Sharper long-clip quality** — noticeably less blur build-up even after 3 consecutive video extensions
+- **Better instruction following** — more accurate on negative prompts (e.g. "no subtitles / no bgm"), timestamp-based shot instructions, and multi-language prompts
+- **Fewer generation artifacts** — reduced duplicate-person ("twinning") glitches, reduced celebrity-face/IP likeness risk, and less carried-over source-platform watermarking
 
-Seedance 2.5 accepts **text, images, video clips, and audio** as input and outputs **MP4 video with synchronized audio**.
+Seedance 2.5 accepts **text, images, video clips, and audio** as input and outputs video with synchronized audio in **MP4** (standard, default) or **MOV** (high color-fidelity, recommended for multi-step video extension/editing) format.
 
 ---
 
@@ -86,10 +89,13 @@ Seedance 2.5 accepts **text, images, video clips, and audio** as input and outpu
 | Audio sync / lip-sync | Present | Enhanced, tighter |
 | Physics / motion | Standard | Improved cloth & fluid sim |
 | Style fusion | Basic | Brand-safe style fusion |
-| Max resolution | 1080p | 1080p+ (4K-oriented) |
+| Max resolution (launch) | 480p / 720p | 480p / 720p (1080p & 4K planned, not yet enabled) |
 | Max duration | 15s | 30s native single clip |
 | Video editing | Not supported | Background swap, object removal, style transfer |
-| Multimodal references | Limited | Up to 11 simultaneous references |
+| Reference images | Up to 9 | Up to 30 |
+| Reference video clips | Up to 3 (15s total) | Up to 10 (30s total) |
+| Reference audio clips | Up to 3 (15s total) | Up to 10 (30s total) |
+| Output container | MP4 only | MP4 (default) or MOV (yuv444p, high color-fidelity) |
 
 ---
 
@@ -104,15 +110,15 @@ Seedance 2.5 accepts **text, images, video clips, and audio** as input and outpu
 - **Video Editing** — inpaint, remove objects, transfer styles while preserving composition
 
 ### Supported Input Formats
-- Images: JPEG, PNG, WebP (up to 9 images)
-- Video: MP4, MOV (up to 3 clips, 15s total)
-- Audio: WAV, MP3 (up to 3 files)
+- Images: JPEG, PNG, WebP, BMP, TIFF, GIF, HEIC/HEIF (up to 30 images per request)
+- Video: MP4, MOV, 480p–4K source resolution (up to 10 reference clips, 2–30s each, 30s combined total)
+- Audio: WAV, MP3 (up to 10 reference clips, 2–30s each, 30s combined total)
 
 ### Output Specs
-- Resolutions: 480p, 720p, 1080p
+- Resolutions: 480p, 720p at launch (1080p and 4K planned, not yet enabled)
 - Durations: 4–30 seconds per clip
 - Aspect Ratios: `21:9` `16:9` `4:3` `1:1` `3:4` `9:16`
-- Format: MP4 with synchronized audio
+- Format: MP4 (H.264, yuv420p, AAC audio — default) or MOV (H.264 4:4:4, yuv444p, PCM audio — higher color fidelity, best for repeated extension/editing)
 
 ---
 
@@ -259,6 +265,41 @@ print(f"Video: {video_url}")
 | `remove_watermark` | bool | `true` `false` | `false` | Remove MuAPI watermark |
 
 > **Playground:** [muapi.ai/playground](https://muapi.ai?utm_source=github&utm_medium=readme&utm_campaign=awesome-seedance-2.5)
+
+---
+
+### Resolution → Pixel Dimensions
+
+Seedance 2.5 adjusted the 480p pixel dimensions slightly from Seedance 2.0. 720p is unchanged.
+
+| Aspect Ratio | 480p (2.5) | 720p |
+|---|---|---|
+| `16:9` | 854×480 | 1280×720 |
+| `9:16` | 480×854 | 720×1280 |
+| `1:1` | 640×640 | 960×960 |
+| `4:3` | 752×560 | 1112×834 |
+| `3:4` | 560×752 | 834×1112 |
+| `21:9` | 992×432 | 1470×630 |
+
+---
+
+### Native API Parameters (Direct Volcano Ark / BytePlus Integration)
+
+If you're calling Seedance 2.5 directly rather than through MuAPI's simplified schema, these are the full set of public request parameters:
+
+| Parameter | Type | Description |
+|---|---|---|
+| `duration` | int | Video length in seconds. Range: `-1` (auto) or `4`–`30`. Default `5`. |
+| `resolution` | string | `480p` or `720p` (1080p/4K planned). Default `720p`. |
+| `ratio` | string | `16:9` `4:3` `1:1` `3:4` `9:16` `21:9` `adaptive`. `adaptive` lets the model pick the best ratio from the first frame / prompt. |
+| `output_format` | string | `mp4` (default, standard color) or `mov` (yuv444p/yuv444p10le, best for extend/edit chains — recommend using `mov` for both input and output when extending a clip repeatedly). |
+| `bitrate_mode` | string | `standard` (CRF 18) or `high` (CRF 11, 3–5× larger file, more detail). Default `high` for Seedance 2.5. |
+| `camera_fixed` | bool | `true` biases the model toward a locked-off camera. Default `false`. |
+| `generate_audio` | bool | `true` (default) generates synchronized voice/SFX/music from the prompt and visuals; `false` outputs a silent clip. |
+| `return_last_frame` | bool | Returns the final frame as a watermark-free PNG for chaining into another generation. |
+| `watermark` | bool | Whether the output carries a visible watermark. |
+| `content.role` | string | Marks a reference asset's purpose: `first_frame`, `last_frame`, `reference_image`, `reference_video`, `reference_audio`. |
+| `seed` | int | `-1` to `4294967295`. Same seed does not guarantee identical output, but keeps generations in the same neighborhood. |
 
 ---
 
