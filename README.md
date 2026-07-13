@@ -9,6 +9,12 @@
 
 ---
 
+## 📺 Video Tutorial
+
+[**How to Access Seedance 2.5 API (Step-by-Step Guide)**](https://www.youtube.com/watch?v=Uszlw7H4VP4) — a full walkthrough of getting an API key and making your first Seedance 2.5 call via [MuAPI](https://muapi.ai/seedance-2.5?utm_source=github&utm_medium=readme&utm_campaign=awesome-seedance-2.5).
+
+---
+
 ## Related Projects
 
 - [Seedance-2.5-API](https://github.com/SamurAIGPT/Seedance-2.5-API) — Python wrapper for the Seedance 2.5 API — text-to-video, image-to-video, character consistency
